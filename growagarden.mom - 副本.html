@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow a Garden Game Online - Play Free at growagarden.mom</title>
+    <meta name="description" content="Play Grow a Garden game online for free! Experience the joy of virtual gardening with beautiful graphics and engaging gameplay. Start growing your dream garden today!">
+    <meta name="keywords" content="grow a garden game, online gardening game, free garden game, virtual gardening, plant simulation game">
+    <meta name="author" content="growagarden.mom">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://growagarden.mom/">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Grow a Garden Game Online - Play Free">
+    <meta property="og:description" content="Experience the joy of virtual gardening with beautiful graphics and engaging gameplay. Start growing your dream garden today!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://growagarden.mom/">
+    <meta property="og:image" content="https://growagarden.mom/garden-preview.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Grow a Garden Game Online - Play Free">
+    <meta name="twitter:description" content="Experience the joy of virtual gardening with beautiful graphics and engaging gameplay.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Apple-inspired color palette */
+            --primary-green: #34C759;
+            --secondary-green: #30D158;
+            --accent-green: #32D74B;
+            --dark-green: #1D8348;
+            --light-green: #D4F4DD;
+            --apple-blue: #007AFF;
+            --apple-purple: #AF52DE;
+            --apple-orange: #FF9500;
+            --apple-red: #FF3B30;
+            --apple-gray: #8E8E93;
+            --apple-light-gray: #F2F2F7;
+            --apple-dark-gray: #1C1C1E;
+            --white: #FFFFFF;
+            --black: #000000;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--apple-dark-gray);
+            background: linear-gradient(135deg, var(--light-green) 0%, var(--apple-light-gray) 50%, var(--light-green) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-decoration: none;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--apple-dark-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-green);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--apple-dark-gray);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            color: var(--apple-dark-gray);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .fullscreen-btn:hover {
+            background: var(--primary-green);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 199, 89, 0.3);
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green));
+            border-radius: 2px;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--apple-dark-gray);
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-section li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            color: var(--apple-dark-gray);
+        }
+
+        .content-section li::before {
+            content: '🌱';
+            position: absolute;
+            left: 0;
+            top: 0.75rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            margin: 1rem 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--apple-dark-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(52, 199, 89, 0.1);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* More Games Section */
+        .more-games {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .more-games a {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(52, 199, 89, 0.3);
+        }
+
+        .more-games a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(52, 199, 89, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--apple-dark-gray);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--glass-bg);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 6rem 0 2rem;
+            }
+
+            .content-section {
+                padding: 2rem;
+                margin: 2rem 0;
+            }
+
+            .iframe-wrapper {
+                height: 400px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .iframe-wrapper {
+                height: 300px;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            .game-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Fullscreen styles */
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--black);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen .game-iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        .fullscreen .fullscreen-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--apple-red);
+            color: var(--white);
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">🌱 Grow a Garden</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#game">Play Game</a></li>
+                <li><a href="#how-to-play">How to Play</a></li>
+                <li><a href="#advantages">Advantages</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Grow a Garden Game Online</h1>
+                <p style="font-size: 1.3rem; color: var(--apple-gray); margin-bottom: 2rem;">Experience the joy of virtual gardening with beautiful graphics and engaging gameplay</p>
+            </div>
+        </section>
+
+        <!-- Game Section -->
+        <section id="game" class="container">
+            <div class="game-container">
+                <div class="iframe-wrapper">
+                    <iframe 
+                        src="https://games.crazygames.com/en_US/grow-a-garden---growden-io/index.html" 
+                        class="game-iframe"
+                        allowfullscreen
+                        title="Grow a Garden Game">
+                    </iframe>
+                    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Play Section -->
+        <section id="how-to-play" class="container">
+            <div class="content-section">
+                <h2>How to Play Grow a Garden Game</h2>
+                <p>Grow a Garden is an engaging simulation game that lets you create and manage your own virtual garden. Here's how to get started:</p>
+                <ul>
+                    <li>Click on empty soil patches to plant seeds</li>
+                    <li>Water your plants regularly to help them grow</li>
+                    <li>Harvest mature plants to earn coins and experience</li>
+                    <li>Use earned coins to buy new seeds and garden tools</li>
+                    <li>Expand your garden by unlocking new areas</li>
+                    <li>Complete daily challenges for bonus rewards</li>
+                </ul>
+                <p>The game combines strategy, timing, and creativity to create an immersive gardening experience that's both relaxing and rewarding.</p>
+            </div>
+        </section>
+
+        <!-- Advantages Section -->
+        <section id="advantages" class="container">
+            <div class="content-section">
+                <h2>Grow a Garden Game Advantages</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>🌱 Educational Value</h3>
+                        <p>Learn about different plant types, growth cycles, and gardening techniques while having fun.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🧘 Relaxing Experience</h3>
+                        <p>Enjoy a calming and stress-relieving gameplay experience that promotes mindfulness.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎯 Strategic Thinking</h3>
+                        <p>Develop planning and resource management skills through garden optimization.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎨 Creative Expression</h3>
+                        <p>Design and customize your garden layout to reflect your personal style and preferences.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="container">
+            <div class="content-section">
+                <h2>Grow a Garden Game Core Features</h2>
+                <ul>
+                    <li><strong>Diverse Plant Collection:</strong> Grow flowers, vegetables, fruits, and exotic plants</li>
+                    <li><strong>Weather System:</strong> Experience different weather conditions that affect plant growth</li>
+                    <li><strong>Seasonal Changes:</strong> Watch your garden transform through spring, summer, fall, and winter</li>
+                    <li><strong>Garden Tools:</strong> Use various tools like watering cans, fertilizers, and pruning shears</li>
+                    <li><strong>Achievement System:</strong> Unlock badges and rewards for completing gardening milestones</li>
+                    <li><strong>Social Features:</strong> Share your garden creations with friends and the community</li>
+                    <li><strong>Offline Progress:</strong> Your plants continue to grow even when you're not playing</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="container">
+            <div class="content-section">
+                <h2>How the Game Works</h2>
+                <p>Grow a Garden operates on a sophisticated simulation engine that creates realistic plant growth patterns:</p>
+                <ul>
+                    <li><strong>Growth Cycles:</strong> Each plant follows a realistic growth timeline from seed to harvest</li>
+                    <li><strong>Resource Management:</strong> Balance water, sunlight, and nutrients for optimal plant health</li>
+                    <li><strong>Economic System:</strong> Earn money through harvesting and selling produce to expand your garden</li>
+                    <li><strong>Progression System:</strong> Level up to unlock new plants, tools, and garden areas</li>
+                    <li><strong>AI-Driven Events:</strong> Random events like pests, weather changes, and special visitors add excitement</li>
+                </ul>
+                <p>The game's physics engine ensures that plant interactions, soil conditions, and environmental factors all work together to create an authentic gardening experience.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="container">
+            <div class="content-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is Grow a Garden game free to play?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Grow a Garden is completely free to play. You can enjoy all the core features without any cost. There are optional in-game purchases for premium seeds and decorative items, but they're not required to progress.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I play on mobile devices?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! Grow a Garden is fully optimized for both desktop and mobile devices. The responsive design ensures a great gaming experience on smartphones, tablets, and computers.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How often do I need to check my garden?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While you can check your garden as often as you like, most plants have growth cycles that span several hours. Checking in 2-3 times per day is usually sufficient to maintain a thriving garden.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I save my progress?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, your progress is automatically saved to your browser's local storage. As long as you're playing on the same device and browser, your garden will be preserved between sessions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Are there any multiplayer features?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can grow your ideal garden together with friends on Grow a Garden.You can also share screenshots of your garden with friends and compare your progress on leaderboards.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- More Games Section -->
+        <section class="container">
+            <div class="content-section more-games">
+                <h2>Explore More Games</h2>
+                <p>Discover other exciting online games and expand your gaming experience!</p>
+                <a href="https://bloxd.asia" target="_blank" rel="noopener noreferrer">Visit bloxd.asia for More Games</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 growagarden.mom - Play Grow a Garden Game Online. All rights reserved.</p>
+            <p>Experience the joy of virtual gardening with our free online game.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Auto-hide navbar after 5 seconds of inactivity
+        let mouseTimer;
+        const navbar = document.getElementById('navbar');
+
+        function resetTimer() {
+            clearTimeout(mouseTimer);
+            navbar.classList.remove('hidden');
+            mouseTimer = setTimeout(() => {
+                navbar.classList.add('hidden');
+            }, 5000);
+        }
+
+        document.addEventListener('mousemove', resetTimer);
+        document.addEventListener('mousedown', resetTimer);
+        document.addEventListener('keypress', resetTimer);
+        document.addEventListener('scroll', resetTimer);
+
+        // FAQ toggle functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            faqItem.classList.toggle('active');
+            answer.classList.toggle('active');
+        }
+
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            const iframe = document.querySelector('.game-iframe');
+            const wrapper = document.querySelector('.iframe-wrapper');
+            
+            if (!document.fullscreenElement) {
+                if (wrapper.requestFullscreen) {
+                    wrapper.requestFullscreen();
+                } else if (wrapper.webkitRequestFullscreen) {
+                    wrapper.webkitRequestFullscreen();
+                } else if (wrapper.msRequestFullscreen) {
+                    wrapper.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all content sections
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
